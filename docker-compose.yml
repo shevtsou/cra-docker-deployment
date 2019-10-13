@@ -1,13 +1,16 @@
-version: '3.3'
+version: '3.7'
 
 services:
-  app:
+
+  sample4:
+    container_name: sample4
     build:
-      context: services/app
+      context: services/app/
       dockerfile: Dockerfile
-    ports:
-      - '8080'
     volumes:
-      - "~/.bash_history:/.bash_history"
-      - "./services/app:/usr/src/app:cached"
-      - "/tmp:/tmp:delegated"
+      - './services/app:/app'
+      - '/app/node_modules'
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=development
