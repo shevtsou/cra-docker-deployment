@@ -3,6 +3,7 @@ version: '3.7'
 services:
 
   sample4:
+    env_file: ".env"
     container_name: sample4
     build:
       context: services/app/
@@ -10,7 +11,16 @@ services:
     volumes:
       - './services/app:/app'
       - '/app/node_modules'
-    ports:
-      - '3001:3000'
+    expose:
+      - '3000'
     environment:
       - NODE_ENV=development
+  
+  sample4_nginx:
+    container_name: sample4_nginx
+    build:
+      context: services/nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - sample4
